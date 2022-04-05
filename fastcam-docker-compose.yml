@@ -1,0 +1,44 @@
+version: '3.1'
+
+services:
+  postgressql:
+    container_name: fast-cam-postgres
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - "fast-cam-postgres:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_SUPERUSER}
+      - POSTGRES_PASSWORD=${DB_SUPERPASSWORD}
+
+  redis:
+    container_name: fastcam-redis
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redis-conf:/usr/local/etc/redis/redis.conf"
+      - "redis-data:/data"
+
+  fastcamdb:
+    container_name: fastcamdb
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    command: uvicorn app.main:app --reload --workers 4 --host 0.0.0.0 --port 80
+    volumes:
+      - ./app:/code/app
+    ports:
+      - "8001:80"
+    environment:
+      - ENVIRONMENT=local
+    restart: always
+
+
+volumes:
+  fast-cam-postgres:
+  redis-conf:
+  redis-data:

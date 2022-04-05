@@ -1,0 +1,33 @@
+# core
+fastapi==0.65.2
+fastapi-profiler==1.0.0
+fastapi-utils==0.2.1
+pydantic==1.8.2
+uvicorn==0.14.0
+starlette==0.14.2
+starlette-context==0.3.2
+python-dotenv==0.14.0
+aioredis==2.0.0
+fastapi-cache2==0.1.8
+requests==2.27.1
+pre-commit==2.18.1
+
+# testing
+pytest==6.2.5
+pytest-cov==3.0.0
+
+# DB
+alembic==1.4.3
+psycopg2-binary==2.8.6
+psycopg2==2.9.1
+sqlalchemy-utils==0.37.8
+
+# Formatting & linting
+black==21.5b0
+flake8==3.9.1
+reorder-python-imports==2.5.0
+mypy==0.910
+flake8-docstrings==1.6.0
+types-requests==2.25.9
+python-multipart==0.0.5
+click==8.0.2
