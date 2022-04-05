@@ -10,4 +10,3 @@ def BaseDependencies():  # noqa
         Depends(attach_user_db),
     ]
     return dependency_list
-

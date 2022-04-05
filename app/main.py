@@ -1,6 +1,5 @@
 """Main file, runs service."""
 import datetime
-import logging
 
 import uvicorn
 from uvicorn.supervisors import ChangeReload

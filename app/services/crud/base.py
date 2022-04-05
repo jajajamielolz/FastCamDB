@@ -13,7 +13,6 @@ from psycopg2.errors import InsufficientPrivilege  # noqa
 from pydantic import BaseModel
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
-from starlette_context import context
 
 from app.core import errors
 from app.models import DeclarativeBase
@@ -61,12 +60,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         :param db: a db session
         :param skip: number of models to skip
         :param limit: max number of models in list
-        :param user_permissions: user permissions list
-        :param filter: the filter schema to be applied on query
-        :param filter_function: the filtered query function that applies filter schema to query
         :returns: list of model objects
         """
-
         model_objs = (
             db.query(self.model)
             .order_by(desc(self.model.time_created), desc(self.model.uuid))
@@ -88,9 +83,6 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
         :param db: a db session
         :param obj_in: input model schema object
-        :param creator: creator of the model
-        :param creator_org: creator of the models organization
-        :param commit: whether or not to commit to db
         :returns: model object
         """
         obj_in_data = jsonable_encoder(obj_in)
@@ -115,10 +107,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         :param db: a db session
         :param uuid: uuid of model object
         :param obj_in: a schema object/dict of updated fields
-        :param cpmmit: commit to db or not
         :returns: model object
         """
-
         db_obj = self.get(db=db, uuid=uuid)
         obj_data = jsonable_encoder(db_obj)
         if isinstance(obj_in, dict):
@@ -142,10 +132,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
         :param db: a db session
         :param uuid: uuid of model object
-        :param commit: commit to db or not
         :returns: model object
         """
-
         obj = db.query(self.model).filter(self.model.uuid == uuid).first()
         if obj is None:
             raise errors.RecordNotFoundError(model_name=self.model.__name__, uuid=uuid)
@@ -168,4 +156,3 @@ def extract_object_data(obj_in_data, model):
         if k in obj_cols:
             out_data[k] = v
     return out_data
-

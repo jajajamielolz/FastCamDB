@@ -5,7 +5,6 @@ from fastapi import APIRouter
 from fastapi import Request
 from fastapi_cache.decorator import cache
 
-from app.api.dependencies.collections import BaseDependencies
 from app.core.config import config
 from app.db.session import get_super_session
 from app.db.session import get_user_session

@@ -1,10 +1,8 @@
 """Review endpoints."""
 from typing import Any
 from typing import List
-from typing import Optional
 
 from fastapi import APIRouter
-from fastapi import Depends
 from fastapi import Request
 
 from app import schemas
@@ -62,4 +60,3 @@ def update_review(request: Request, uuid: str, body: schemas.ReviewUpdate) -> An
 def remove_review(request: Request, uuid: str) -> Any:
     """Remove a review."""
     return crud.review.remove(db=request.state.db, uuid=uuid)
-

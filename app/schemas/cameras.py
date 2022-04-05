@@ -1,7 +1,8 @@
 """Camera schemas."""
 import datetime
-from pydantic import BaseModel
 from typing import Optional
+
+from pydantic import BaseModel
 
 
 class CameraBase(BaseModel):
@@ -32,5 +33,3 @@ class Camera(CameraBase):
     uuid: str
     time_created: datetime.datetime
     time_updated: datetime.datetime
-
-

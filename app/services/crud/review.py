@@ -12,4 +12,3 @@ class CRUDReview(CRUDBase[Review, ReviewCreate, ReviewUpdate]):
 
 
 review = CRUDReview(Review)
-

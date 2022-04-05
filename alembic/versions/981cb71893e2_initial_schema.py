@@ -5,8 +5,9 @@ Revises:
 Create Date: 2022-04-04 21:57:19.725334
 
 """
-from alembic import op
 import sqlalchemy as sa
+
+from alembic import op
 
 
 # revision identifiers, used by Alembic.
@@ -54,9 +55,7 @@ def upgrade():
         sa.Column("uuid", sa.String(), nullable=False),
         sa.Column("description", sa.String(), nullable=False),
         sa.Column("camera_uuid", sa.String(), nullable=False),
-        sa.ForeignKeyConstraint(
-            ["camera_uuid"], ["camera.uuid"], ondelete="CASCADE"
-        ),
+        sa.ForeignKeyConstraint(["camera_uuid"], ["camera.uuid"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("uuid"),
     )
     # ### end Alembic commands ###

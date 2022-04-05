@@ -3,9 +3,11 @@ import traceback
 
 from fastapi import Request
 from fastapi.responses import JSONResponse
+from sqlalchemy.exc import IntegrityError
 
 from app.core import errors
-from sqlalchemy.exc import IntegrityError
+
+
 async def exception_catcher(request: Request, call_next):
     """
     Global exception handler for app.
@@ -36,7 +38,10 @@ async def exception_catcher(request: Request, call_next):
     except errors.InvalidTestingEnvironment as e:
         return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
     except IntegrityError as e:
-        return JSONResponse(status_code=500, content={"detail": f"orig: '{e.orig}', statment: '{e.statement}'"})
+        return JSONResponse(
+            status_code=500,
+            content={"detail": f"orig: '{e.orig}', statment: '{e.statement}'"},
+        )
     except Exception as e:
         print(traceback.format_exc())
         return JSONResponse(

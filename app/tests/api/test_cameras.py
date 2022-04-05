@@ -41,4 +41,3 @@ def test_patch_cameras_ok(client: TestClient):
     """Test patching an camera."""
     response = client.patch("/cameras/1", json={"name": "3"})
     assert response.status_code == 200
-

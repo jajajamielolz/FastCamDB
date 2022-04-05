@@ -1,10 +1,7 @@
 """Camera model."""
 from sqlalchemy import Column
-from sqlalchemy import ForeignKey
-from sqlalchemy import UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import String
-from starlette_context import context
 
 from app.models.core.base import DeclarativeBase
 from app.models.core.mixin import UUIDStringPKMixin

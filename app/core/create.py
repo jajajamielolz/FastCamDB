@@ -9,7 +9,6 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette_context import plugins
 from starlette_context.middleware import ContextMiddleware
 
-from app import __version__
 from app.api import api
 from app.middlewares import exception_catcher
 
@@ -21,8 +20,6 @@ def get_git_revision_hash():
 
 def create_app() -> FastAPI:
     """Build and return FastApi application."""
-    version = __version__
-
     # sentry-sdk
 
     middleware = [
@@ -53,6 +50,5 @@ def create_app() -> FastAPI:
     # environment.add_section("app uptime", get_uptime)
 
     app.include_router(api.router)
-
 
     return app

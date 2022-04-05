@@ -1,5 +1,4 @@
 """App utilities."""
-
 from app.db import session
 
 
