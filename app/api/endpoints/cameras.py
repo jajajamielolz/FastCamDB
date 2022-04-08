@@ -8,6 +8,7 @@ from fastapi import Request
 from app import schemas
 from app.api.dependencies.collections import BaseDependencies
 from app.services import crud
+from fastapi import Depends
 
 
 router = APIRouter(prefix="/cameras", tags=["cameras"], dependencies=BaseDependencies())
@@ -16,7 +17,7 @@ router = APIRouter(prefix="/cameras", tags=["cameras"], dependencies=BaseDepende
 @router.post("", response_model=schemas.Camera)
 def create_camera(request: Request, body: schemas.CameraCreate) -> Any:
     """Create an camera."""
-    return crud.camera.create(db=request.state.db, obj_in=body)
+    return crud.camera.create_camera(db=request.state.db, obj_in=body)
 
 
 @router.get("/{uuid}", response_model=schemas.Camera)
@@ -30,11 +31,11 @@ def read_cameras(
     request: Request,
     skip: int = 0,
     limit: int = 100,
+    custom_filter: schemas.CameraFilter = Depends(),
 ) -> Any:
     """Get a list of cameras."""
-    cameras_page = crud.camera.get_multi(db=request.state.db, skip=skip, limit=limit)
 
-    return cameras_page
+    return crud.camera.filter_camera(db=request.state.db, skip=skip, limit=limit, custom_filter=custom_filter)
 
 
 @router.patch("/{uuid}", response_model=schemas.Camera)

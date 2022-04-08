@@ -142,6 +142,20 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             db.commit()
         return obj
 
+    def get_or_create(self, db: Session, obj_in: Union[CreateSchemaType, Dict[str, Any]], get_property: str = "name") -> ModelType:
+        """Checks for object with given property and returns it if found, otherwise creates it."""
+        if not hasattr(self.model, get_property):
+            raise AttributeError(f"{self.model.__name__} does not have {get_property} property")
+        model_obj = db.query(self.model).filter(getattr(self.model, get_property) == getattr(obj_in, get_property)).first()
+        # record not found
+        if model_obj is None:
+            obj_in_data = jsonable_encoder(obj_in)
+            obj_in_data = extract_object_data(obj_in_data, self.model)
+            model_obj = self.model(**obj_in_data)  # type: ignore
+            db.add(model_obj)
+            db.commit()
+        return model_obj
+
 
 def extract_object_data(obj_in_data, model):
     """

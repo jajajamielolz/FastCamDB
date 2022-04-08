@@ -18,7 +18,7 @@ class Review(DeclarativeBase, UUIDStringPKMixin):
 
     # foreign keys
     camera_uuid = Column(
-        String, ForeignKey("camera.uuid", ondelete="CASCADE"), nullable=False
+        String, ForeignKey("camera.uuid", ondelete="CASCADE"), nullable=True
     )
 
     # relationships

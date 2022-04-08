@@ -18,7 +18,7 @@ pip install -r requirements.txt
 `docker-compose --env-file .env.local -f fastcam-docker-compose.yml up -d --build`
    
 
-3. Set up database. `ENVIRONMENT=development ./scripts/bash/reset_db.sh` This script Removes the container `fast-cam-postgres` and the volume `vol_fast-cam-postgres`, rebuilds the container, then applies schema migrations to the database and initializes the database. 
+3. Set up database. `ENVIRONMENT=development ./scripts/bash/reset_db.sh` This script Removes the container `fast-cam-postgres` and the volume `fastcamdb_fast-cam-postgres`, rebuilds the container, then applies schema migrations to the database and initializes the database. 
    
 Note: this script can be ran at any point to start with a fresh database
 
@@ -42,4 +42,8 @@ By navigating to `http://localhost:8001/docs` (for the server running in the con
 you will see the swagger doc interface ![img.png](img.png)
 
 ---------------------------------------
+
+## Initial SQL Diagram
+
+![sqldb.png](sqldb.png)
 

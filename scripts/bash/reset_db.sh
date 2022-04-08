@@ -5,7 +5,7 @@ source venv/bin/activate
 echo 'removing postgres docker container...'
 docker rm -f fast-cam-postgres
 echo 'removing postgres docker volume...'
-docker volume rm vol_fast-cam-postgres
+docker volume rm fastcamdb_fast-cam-postgres
 echo 're-composing docker...'
 docker-compose --env-file .env."$ENVIRONMENT" -f fastcam-docker-compose.yml up -d --build postgressql
 # If no sleep psycopg2 connection will terminate.
