@@ -1,3 +1,7 @@
+Not yet finished - repo goal is to have a local database of my camera collection and be able to make simple queries. 
+example query - get all cameras that are compatible with a lens with a specific lens mount or find all lenses that fit this camera with a minimum aperature of 1.4
+
+
 # Setup
 ##### Pre-requisites
 * python 3.8.x 
