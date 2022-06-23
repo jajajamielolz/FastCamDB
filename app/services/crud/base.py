@@ -32,7 +32,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def get(
         self,
         db: Session,
-        uuid: str,
+        get_value: Any,
+        get_property: str = "uuid"
     ) -> ModelType:
         """
         Get model object of uuid.
@@ -41,10 +42,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         :param uuid: the uuid of the model
         :returns: model object
         """
-        model_obj = db.query(self.model).filter(self.model.uuid == uuid).first()
-        # record not found
-        if model_obj is None:
-            raise errors.RecordNotFoundError(model_name=self.model.__name__, uuid=uuid)
+        model_obj = db.query(self.model).filter(
+            getattr(self.model, get_property) == get_value).first()
         return model_obj
 
     def get_multi(
@@ -109,7 +108,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         :param obj_in: a schema object/dict of updated fields
         :returns: model object
         """
-        db_obj = self.get(db=db, uuid=uuid)
+        db_obj = self.get(db=db, get_value=uuid, get_property="uuid")
         obj_data = jsonable_encoder(db_obj)
         if isinstance(obj_in, dict):
             update_data = obj_in
@@ -136,7 +135,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         obj = db.query(self.model).filter(self.model.uuid == uuid).first()
         if obj is None:
-            raise errors.RecordNotFoundError(model_name=self.model.__name__, uuid=uuid)
+            raise errors.RecordNotFoundError(model_name=self.model.__name__, get_value=uuid)
         db.delete(obj)
         if commit:
             db.commit()

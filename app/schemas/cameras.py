@@ -19,9 +19,9 @@ class CameraBase(BaseModel):
     max_shutter_speed: Optional[float]
     auto_focus: Optional[bool]
     shutter_priority: Optional[bool]
-    aperture_priority: Optional[float]
+    aperture_priority: Optional[bool]
     bulb_mode: Optional[bool]
-    self_timer: Optional[int]
+    self_timer: Optional[bool]
     manual: Optional[bool]
     battery_required: Optional[bool]
 
@@ -29,8 +29,9 @@ class CameraBase(BaseModel):
         orm_mode = True
 
 
-class CameraUpdate(BaseModel):
+class CameraUpdate(CameraBase):
     """Camera Update Schema."""
+    name: Optional[str]
 
     pass
 

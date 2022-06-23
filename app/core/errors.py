@@ -1,11 +1,11 @@
 """App errors."""
 from typing import List
 from typing import Optional
+from typing import Any
 
 
 class WritePermissionError(Exception):
     """Could not write to db exception."""
-
     def __init__(self):
         """Init exception."""
         self.status_code = 403
@@ -16,13 +16,22 @@ class WritePermissionError(Exception):
 
 class RecordNotFoundError(Exception):
     """Could not find record in db exception."""
-
-    def __init__(self, uuid: str, model_name: str):
+    def __init__(self, get_value: Any, model_name: str):
         """Init exception."""
         self.status_code = 404
-        self.detail = f"Record with uuid: {uuid} not found in table: {model_name}"
+        self.detail = f"Record with uuid: {get_value} not found in table: {model_name}"
         self.message = self.detail
         super(RecordNotFoundError, self).__init__(self.detail)
+
+
+class DuplicateCameraError(Exception):
+    """If app tries to make a duplicate camera."""
+    def __init__(self, camera_name: str, camera_uuid: str):
+        """Init exception."""
+        self.status_code = 409
+        self.detail = f"Camera with name {camera_name} already exists, its uuid is: {camera_uuid}"
+        self.message = self.detail
+        super(DuplicateCameraError, self).__init__(self.detail)
 
 
 class ModelNotFoundError(Exception):

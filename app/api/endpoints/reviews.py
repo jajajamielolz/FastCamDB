@@ -33,7 +33,7 @@ def read_review(
     uuid: str,
 ) -> Any:
     """Get a review."""
-    return crud.review.get(db=request.state.db, uuid=uuid)
+    return crud.review.get(db=request.state.db, get_value=uuid)
 
 
 @router.get("", response_model=List[schemas.Review])
@@ -59,4 +59,4 @@ def update_review(request: Request, uuid: str, body: schemas.ReviewUpdate) -> An
 @router.delete("/{uuid}")
 def remove_review(request: Request, uuid: str) -> Any:
     """Remove a review."""
-    return crud.review.remove(db=request.state.db, uuid=uuid)
+    return crud.review.remove(db=request.state.db, get_prop=uuid)
