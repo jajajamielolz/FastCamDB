@@ -50,3 +50,9 @@ you will see the swagger doc interface ![img.png](img.png)
 
 ![sqldb.png](sqldb.png)
 
+
+# Scripts
+
+`./scripts/bash/startup.sh ` To close all containers running on 6379, 5432, 8000, and 8001 and then run the FastCamDB postgres/redis/app containers
+
+

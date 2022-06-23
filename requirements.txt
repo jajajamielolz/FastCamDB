@@ -31,3 +31,6 @@ flake8-docstrings==1.6.0
 types-requests==2.25.9
 python-multipart==0.0.5
 click==8.0.2
+
+# Utilities
+fuzzysearch==0.7.3
