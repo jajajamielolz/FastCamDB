@@ -78,8 +78,6 @@ COMPLEX_CAMERA_JSON = {
   "name": "Contax 159 Quartz",
   "description": "Geat, simple camera.",
   "alternate_name": "Contax 159",
-  "min_year": "2022-06-23T19:45:30.363Z",
-  "max_year": "2022-06-23T19:45:30.363Z",
   "min_shutter_speed": 1/1000,
   "max_shutter_speed": 1,
   "auto_focus": False,

@@ -13,8 +13,6 @@ class CameraBase(BaseModel):
     name: str
     description: Optional[str]
     alternate_name: Optional[str]
-    min_year: Optional[datetime.datetime]
-    max_year: Optional[datetime.datetime]
     min_shutter_speed: Optional[float]
     max_shutter_speed: Optional[float]
     auto_focus: Optional[bool]

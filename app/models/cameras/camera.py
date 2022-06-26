@@ -22,12 +22,6 @@ class Camera(DeclarativeBase, UUIDStringPKMixin):
     name = Column(String, nullable=True)
     alternate_name = Column(String, nullable=True)
     description = Column(String, nullable=True)
-    min_year = Column(
-        DateTime(timezone=True), server_default=func.now(), nullable=True
-    )
-    max_year = Column(
-        DateTime(timezone=True), server_default=func.now(), nullable=True
-    )
     min_shutter_speed = Column(Float, nullable=True)
     max_shutter_speed = Column(Float, nullable=True)
     auto_focus = Column(Boolean, nullable=True)

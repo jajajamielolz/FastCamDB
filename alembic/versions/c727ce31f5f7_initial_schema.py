@@ -55,18 +55,7 @@ def upgrade():
         sa.Column("name", sa.String(), nullable=True),
         sa.Column("alternate_name", sa.String(), nullable=True),
         sa.Column("description", sa.String(), nullable=True),
-        sa.Column(
-            "min_year",
-            sa.DateTime(timezone=True),
-            server_default=sa.text("now()"),
-            nullable=True,
-        ),
-        sa.Column(
-            "max_year",
-            sa.DateTime(timezone=True),
-            server_default=sa.text("now()"),
-            nullable=True,
-        ),
+
         sa.Column("min_shutter_speed", sa.Float(), nullable=True),
         sa.Column("max_shutter_speed", sa.Float(), nullable=True),
         sa.Column("auto_focus", sa.Boolean(), nullable=True),
