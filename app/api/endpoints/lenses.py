@@ -8,6 +8,7 @@ from fastapi import Request
 from app import schemas
 from app.api.dependencies.collections import BaseDependencies
 from app.services import crud
+from fastapi import Depends
 
 
 router = APIRouter(prefix="/lenses", tags=["lenses"], dependencies=BaseDependencies())
@@ -16,7 +17,7 @@ router = APIRouter(prefix="/lenses", tags=["lenses"], dependencies=BaseDependenc
 @router.post("", response_model=schemas.Lens)
 def create_lens(request: Request, body: schemas.LensCreate) -> Any:
     """Create a lens."""
-    return crud.lens.create(db=request.state.db, obj_in=body)
+    return crud.lens.create_lens(db=request.state.db, obj_in=body)
 
 
 @router.get("/{uuid}", response_model=schemas.Lens)
@@ -30,9 +31,11 @@ def read_lenses(
     request: Request,
     skip: int = 0,
     limit: int = 100,
+    custom_filter: schemas.LensFilter = Depends(),
+
 ) -> Any:
     """Get a list of lenses."""
-    return crud.lens.get_multi(db=request.state.db, skip=skip, limit=limit)
+    return crud.lens.filter_lens(db=request.state.db, skip=skip, limit=limit, custom_filter=custom_filter)
 
 
 @router.patch("/{uuid}", response_model=schemas.Lens)

@@ -17,7 +17,7 @@ class CRUDCamera(CRUDBase[Camera, CameraCreate, CameraUpdate]):
         # check if camera with the same name exists first
         exists = self.get(db=db, get_property="name", get_value=obj_in.name)
         if exists:
-            raise errors.DuplicateCameraError(camera_name=exists.name, camera_uuid=exists.uuid)
+            raise errors.DuplicateObjectError(name=exists.name, uuid=exists.uuid, object_type="Camera")
         camera_obj = self.create(obj_in=obj_in, db=db)
         if obj_in.manufacturer:
             manufacturer = crud.manufacturer.get_or_create(db=db, obj_in=obj_in.manufacturer, get_property="name")

@@ -8,7 +8,7 @@ from pydantic import BaseModel
 class ManufacturerBase(BaseModel):
     """Manufacturer Base Schema."""
 
-    name: str
+    name: str = "Contax | Yashica | Minolta | Canon | Pentax | Ricoh | Olympus | Konica | Soligor | Vivitar"
     alternate_name: Optional[str]
     country: Optional[str]
 

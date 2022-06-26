@@ -8,7 +8,7 @@ from pydantic import BaseModel
 class MeteringBase(BaseModel):
     """Metering Base Schema."""
 
-    name: str
+    name: str = "Spot | Center-Weighted | Matrix | Evaluative | CLC (Contrast Light Compensation)"
     description: Optional[str]
 
     class Config:

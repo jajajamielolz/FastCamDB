@@ -24,14 +24,14 @@ class RecordNotFoundError(Exception):
         super(RecordNotFoundError, self).__init__(self.detail)
 
 
-class DuplicateCameraError(Exception):
+class DuplicateObjectError(Exception):
     """If app tries to make a duplicate camera."""
-    def __init__(self, camera_name: str, camera_uuid: str):
+    def __init__(self, name: str, uuid: str, object_type: str):
         """Init exception."""
         self.status_code = 409
-        self.detail = f"Camera with name {camera_name} already exists, its uuid is: {camera_uuid}"
+        self.detail = f"{object_type} with name {name} already exists, its uuid is: {uuid}"
         self.message = self.detail
-        super(DuplicateCameraError, self).__init__(self.detail)
+        super(DuplicateObjectError, self).__init__(self.detail)
 
 
 class ModelNotFoundError(Exception):

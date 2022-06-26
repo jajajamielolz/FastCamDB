@@ -1,82 +1,80 @@
-"""Camera endpoint test suite."""
+"""Lens endpoint test suite."""
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
-from app.models import Camera
+from app.models import Lens
 
 
 @pytest.fixture(scope="function", autouse=True)
 def populate_db(test_db: Session):
     """Populate db."""
-    print("creating camera test objects and adding to db...")
-    camera_1 = Camera(uuid="1", description="fake cam", name="Pentax P3")
-    test_db.add(camera_1)
+    print("creating lens test objects and adding to db...")
+    lens_1 = Lens(uuid="1", name="Distagon")
+    test_db.add(lens_1)
 
     test_db.commit()
 
 
-def test_post_simple_camera_ok(client: TestClient):
-    """Test posting an camera."""
+def test_post_simple_lens_ok(client: TestClient):
+    """Test posting an lens."""
     # test creating basic entry
     response = client.post(
-        "/cameras",
-        json={"name": "Yashica T4", "description": "test creating a camera with just the name property"},
+        "/lenses",
+        json={"name": "Rokkor-x"},
     )
     assert response.status_code == 200
 
     # test creating an entry with the same name raises an error
     response = client.post(
-        "/cameras",
-        json={"name": "Yashica T4", "description": "test creating a camera with just the name property"},
+        "/lenses",
+        json={"name": "Rokkor-x"},
     )
     assert response.status_code == 409
 
 
-def test_post_complex_camera_ok(client: TestClient):
-    """Test posting an camera."""
+def test_post_complex_lens_ok(client: TestClient):
+    """Test posting an lens."""
     # test creating basic entry
     response = client.post(
-        "/cameras",
+        "/lenses",
         json=COMPLEX_CAMERA_JSON,
     )
     assert response.status_code == 200
 
 
-def test_get_camera_ok(client: TestClient):
-    """Test getting an camera."""
-    response = client.get("/cameras/1")
-    #    camera_1 = Camera(uuid="1", description="fake cam", name="Pentax P3")
+def test_get_lens_ok(client: TestClient):
+    """Test getting an lens."""
+    response = client.get("/lenses/1")
     assert response.status_code == 200
-    assert response.json().get('name') == 'Pentax P3'
+    assert response.json().get('name') == 'Distagon'
 
 
-def test_get_cameras_ok(client: TestClient):
-    """Test getting all cameras."""
-    response = client.get("/cameras")
-    assert response.status_code == 200
-    assert len(response.json()) == 1
-
-    response = client.get("/cameras", params={"name": "Pentax P3"})
+def test_get_lenses_ok(client: TestClient):
+    """Test getting all lenses."""
+    response = client.get("/lenses")
     assert response.status_code == 200
     assert len(response.json()) == 1
 
-    response = client.get("/cameras", params={"name": "non-existing-camera"})
+    response = client.get("/lenses", params={"name": "Distagon"})
+    assert response.status_code == 200
+    assert len(response.json()) == 1
+
+    response = client.get("/lenses", params={"name": "non-existing-lens"})
     assert response.status_code == 200
     assert len(response.json()) == 0
 
 
-def test_patch_cameras_ok(client: TestClient):
-    """Test patching an camera."""
-    response = client.patch("/cameras/1", json={"name": "Updated Name"})
+def test_patch_lenses_ok(client: TestClient):
+    """Test patching an lens."""
+    response = client.patch("/lenses/1", json={"name": "Updated Name"})
     assert response.status_code == 200
-    response = client.get("/cameras/1")
+    response = client.get("/lenses/1")
     assert response.json().get('name') == 'Updated Name'
 
 
 COMPLEX_CAMERA_JSON = {
   "name": "Contax 159 Quartz",
-  "description": "Geat, simple camera.",
   "alternate_name": "Contax 159",
   "min_year": "2022-06-23T19:45:30.363Z",
   "max_year": "2022-06-23T19:45:30.363Z",

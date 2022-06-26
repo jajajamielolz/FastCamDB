@@ -61,6 +61,3 @@ class CameraFilter(BaseModel):
     lens_mount_name: Optional[str]
     metering_name: Optional[str]
 
-
-
-    pass

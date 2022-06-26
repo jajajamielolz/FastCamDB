@@ -23,6 +23,7 @@ from .lenses import Lens  # noqa
 from .lenses import LensBase  # noqa
 from .lenses import LensCreate  # noqa
 from .lenses import LensUpdate  # noqa
+from .lenses import LensFilter  # noqa
 from .lenses import LensMount  # noqa
 from .lenses import LensMountBase  # noqa
 from .lenses import LensMountCreate  # noqa

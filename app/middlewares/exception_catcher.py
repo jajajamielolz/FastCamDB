@@ -37,7 +37,7 @@ async def exception_catcher(request: Request, call_next):
         return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
     except errors.InvalidTestingEnvironment as e:
         return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
-    except errors.DuplicateCameraError as e:
+    except errors.DuplicateObjectError as e:
         return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
 
     except IntegrityError as e:
