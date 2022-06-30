@@ -41,6 +41,8 @@ def test_post_complex_camera_ok(client: TestClient):
         json=COMPLEX_CAMERA_JSON,
     )
     assert response.status_code == 200
+    response = client.get("/cameras", params={"name": COMPLEX_CAMERA_JSON.get("name"), "min_shutter_speed": COMPLEX_CAMERA_JSON.get("min_shutter_speed")})
+    assert response.json()[0].get('lens_mount').get('name') == COMPLEX_CAMERA_JSON.get('lens_mount').get('name')
 
 
 def test_get_camera_ok(client: TestClient):

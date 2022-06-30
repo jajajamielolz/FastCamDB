@@ -38,9 +38,11 @@ def test_post_complex_lens_ok(client: TestClient):
     # test creating basic entry
     response = client.post(
         "/lenses",
-        json=COMPLEX_CAMERA_JSON,
+        json=COMPLEX_LENS_JSON,
     )
     assert response.status_code == 200
+    response = client.get("/lenses", params={"name": COMPLEX_LENS_JSON.get("name"), "min_shutter_speed": COMPLEX_LENS_JSON.get("min_focal_length")})
+    assert response.json()[0].get('min_aperture') == COMPLEX_LENS_JSON.get('min_aperture')
 
 
 def test_get_lens_ok(client: TestClient):
@@ -73,26 +75,19 @@ def test_patch_lenses_ok(client: TestClient):
     assert response.json().get('name') == 'Updated Name'
 
 
-COMPLEX_CAMERA_JSON = {
-  "name": "Contax 159 Quartz",
-  "alternate_name": "Contax 159",
-  "min_shutter_speed": 1/1000,
-  "max_shutter_speed": 1,
-  "auto_focus": False,
-  "shutter_priority": False,
-  "aperture_priority": True,
-  "bulb_mode": True,
-  "self_timer": True,
+COMPLEX_LENS_JSON = {
+  "name": "Rokkor-x",
+  "min_focal_length": 1,
+  "max_focal_length": 15,
+  "min_aperture": 1.2,
+  "max_aperture": 22,
+  "auto": False,
   "manual": True,
-  "battery_required": True,
   "manufacturer": {
-    "name": "Contax",
-    "country": "Germany"
+    "name": "Minolta",
+    "country": "Japan"
   },
   "lens_mount": {
-    "name": "C/Y"
-  },
-  "metering": {
-    "name": "TTL center-weighted",
+    "name": "MC/MD"
   }
 }

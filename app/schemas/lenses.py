@@ -56,10 +56,17 @@ class LensUpdate(LensBase):
     pass
 
 
-class LensCreate(LensBase):
+class LensCreate(BaseModel):
     """Lens Create Schema."""
     manufacturer: Optional[ManufacturerCreate]
     lens_mount: Optional[LensMountCreate]
+    name: Optional[str]
+    min_focal_length: Optional[float]
+    max_focal_length: Optional[float]
+    min_aperture: Optional[float]
+    max_aperture: Optional[float]
+    auto: Optional[bool]
+    manual: Optional[bool]
 
 
 class Lens(LensBase):
