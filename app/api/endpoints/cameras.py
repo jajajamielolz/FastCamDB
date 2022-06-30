@@ -20,12 +20,6 @@ def create_camera(request: Request, body: schemas.CameraCreate) -> Any:
     return crud.camera.create_camera(db=request.state.db, obj_in=body)
 
 
-@router.get("/{uuid}", response_model=schemas.Camera)
-def read_camera(request: Request, uuid: str) -> Any:
-    """Get an camera."""
-    return crud.camera.get(db=request.state.db, get_value=uuid)
-
-
 @router.get("", response_model=List[schemas.Camera])
 def read_cameras(
     request: Request,

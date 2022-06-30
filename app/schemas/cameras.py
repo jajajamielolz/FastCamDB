@@ -1,9 +1,11 @@
 """Camera schemas."""
-import datetime
 from typing import Optional
-from .manufacturers import ManufacturerCreate, Manufacturer
-from .lenses import LensMountCreate, LensMount
-from .meterings import MeteringCreate, Metering
+from app.schemas.manufacturers import Manufacturer
+from app.schemas.manufacturers import ManufacturerCreate
+from app.schemas.lenses import LensMountCreate
+from app.schemas.lenses import LensMount
+from app.schemas.meterings import MeteringCreate
+from app.schemas.meterings import Metering
 from pydantic import BaseModel
 
 
@@ -49,6 +51,9 @@ class Camera(CameraBase):
     manufacturer: Optional[Manufacturer]
     lens_mount: Optional[LensMount]
     metering: Optional[Metering]
+
+    class Config:
+        orm_mode = True
 
 
 class CameraFilter(BaseModel):

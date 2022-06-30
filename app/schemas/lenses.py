@@ -1,10 +1,9 @@
 """Lens schemas."""
-import datetime
 from typing import Optional
-
 from pydantic import BaseModel
-from .manufacturers import ManufacturerCreate, Manufacturer
-
+from app.schemas.manufacturers import ManufacturerCreate
+from app.schemas.manufacturers import Manufacturer
+from typing import List
 
 class LensMountBase(BaseModel):
     """LensMount Base Schema."""
@@ -29,8 +28,10 @@ class LensMountCreate(LensMountBase):
 
 class LensMount(LensMountBase):
     """LensMount Schema."""
-
     uuid: str
+
+    class Config:
+        orm_mode = True
 
 
 class LensBase(BaseModel):
@@ -68,13 +69,28 @@ class LensCreate(BaseModel):
     auto: Optional[bool]
     manual: Optional[bool]
 
+    class Config:
+        orm_mode = True
+
+
+class CameraPreview(BaseModel):
+    """Camera Preview Model"""
+    uuid: str
+    name: str
+
+    class Config:
+        orm_mode = True
+
 
 class Lens(LensBase):
     """Lens Schema."""
-
     uuid: str
     manufacturer: Optional[Manufacturer]
     lens_mount: Optional[LensMount]
+    compatible_cameras: Optional[List[CameraPreview]]
+
+    class Config:
+        orm_mode = True
 
 
 class LensFilter(LensBase):

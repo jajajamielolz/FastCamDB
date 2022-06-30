@@ -1,5 +1,4 @@
 """Manufacturer schemas."""
-import datetime
 from typing import Optional
 
 from pydantic import BaseModel
@@ -30,6 +29,9 @@ class ManufacturerCreate(ManufacturerBase):
 
 class Manufacturer(ManufacturerBase):
     """Manufacturer Schema."""
-
     uuid: str
+
+    class Config:
+        orm_mode = True
+
 

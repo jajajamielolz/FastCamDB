@@ -4,6 +4,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
 from app.models import Lens
+from app.tests.api.test_cameras import COMPLEX_CAMERA_JSON
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -45,13 +46,6 @@ def test_post_complex_lens_ok(client: TestClient):
     assert response.json()[0].get('min_aperture') == COMPLEX_LENS_JSON.get('min_aperture')
 
 
-def test_get_lens_ok(client: TestClient):
-    """Test getting an lens."""
-    response = client.get("/lenses/1")
-    assert response.status_code == 200
-    assert response.json().get('name') == 'Distagon'
-
-
 def test_get_lenses_ok(client: TestClient):
     """Test getting all lenses."""
     response = client.get("/lenses")
@@ -71,23 +65,38 @@ def test_patch_lenses_ok(client: TestClient):
     """Test patching an lens."""
     response = client.patch("/lenses/1", json={"name": "Updated Name"})
     assert response.status_code == 200
-    response = client.get("/lenses/1")
-    assert response.json().get('name') == 'Updated Name'
+    response = client.get("/lenses", params={"name": "Updated Name"})
+    assert len(response.json()) == 1
+
+
+def test_compatible_cameras(client: TestClient):
+    """Test compatible cameras for lenses."""
+    # create camera
+    client.post(
+        "/cameras",
+        json=COMPLEX_CAMERA_JSON,
+    )
+    # create lens
+    created_lens = client.post(
+        "/lenses",
+        json=COMPLEX_LENS_JSON,
+    )
+    assert created_lens.json().get('compatible_cameras')[0].get('name') == COMPLEX_CAMERA_JSON.get('name')
 
 
 COMPLEX_LENS_JSON = {
-  "name": "Rokkor-x",
-  "min_focal_length": 1,
-  "max_focal_length": 15,
-  "min_aperture": 1.2,
-  "max_aperture": 22,
-  "auto": False,
-  "manual": True,
   "manufacturer": {
-    "name": "Minolta",
+    "name": "Yashica",
     "country": "Japan"
   },
   "lens_mount": {
-    "name": "MC/MD"
-  }
+    "name": "C/Y"
+  },
+  "name": "ML",
+  "min_focal_length": 1,
+  "max_focal_length": 25,
+  "min_aperture": 2,
+  "max_aperture": 16,
+  "auto": True,
+  "manual": True
 }

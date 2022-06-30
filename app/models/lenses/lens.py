@@ -35,6 +35,7 @@ class Lens(DeclarativeBase, UUIDStringPKMixin):
         String, ForeignKey("manufacturer.uuid", ondelete="CASCADE"), nullable=True
     )
 
+    # relationships
     compatible_cameras = relationship(
         "Camera",
         secondary="lens_mount",
@@ -42,3 +43,5 @@ class Lens(DeclarativeBase, UUIDStringPKMixin):
         secondaryjoin="Camera.lens_mount_uuid == LensMount.uuid",
         viewonly=True,
     )
+    lens_mount = relationship("LensMount")
+    manufacturer = relationship("Manufacturer")

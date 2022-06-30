@@ -20,12 +20,6 @@ def create_lens(request: Request, body: schemas.LensCreate) -> Any:
     return crud.lens.create_lens(db=request.state.db, obj_in=body)
 
 
-@router.get("/{uuid}", response_model=schemas.Lens)
-def read_lens(request: Request, uuid: str) -> Any:
-    """Get a lens."""
-    return crud.lens.get(db=request.state.db, get_value=uuid)
-
-
 @router.get("", response_model=List[schemas.Lens])
 def read_lenses(
     request: Request,

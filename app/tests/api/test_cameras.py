@@ -45,14 +45,6 @@ def test_post_complex_camera_ok(client: TestClient):
     assert response.json()[0].get('lens_mount').get('name') == COMPLEX_CAMERA_JSON.get('lens_mount').get('name')
 
 
-def test_get_camera_ok(client: TestClient):
-    """Test getting an camera."""
-    response = client.get("/cameras/1")
-    #    camera_1 = Camera(uuid="1", description="fake cam", name="Pentax P3")
-    assert response.status_code == 200
-    assert response.json().get('name') == 'Pentax P3'
-
-
 def test_get_cameras_ok(client: TestClient):
     """Test getting all cameras."""
     response = client.get("/cameras")
@@ -72,8 +64,11 @@ def test_patch_cameras_ok(client: TestClient):
     """Test patching an camera."""
     response = client.patch("/cameras/1", json={"name": "Updated Name"})
     assert response.status_code == 200
-    response = client.get("/cameras/1")
-    assert response.json().get('name') == 'Updated Name'
+    response = client.get("/cameras", params={"name": "Updated Name"})
+    assert len(response.json()) == 1
+
+
+# TODO: make compatible lens test
 
 
 COMPLEX_CAMERA_JSON = {
