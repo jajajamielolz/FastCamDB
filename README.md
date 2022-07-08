@@ -53,6 +53,9 @@ you will see the swagger doc interface ![img.png](img.png)
 
 # Scripts
 
-`./scripts/bash/startup.sh ` To close all containers running on 6379, 5432, 8000, and 8001 and then run the FastCamDB postgres/redis/app containers
+`./scripts/bash/startup.sh` To close all containers running on 6379, 5432, 8000, and 8001 and then run the FastCamDB postgres/redis/app containers
 
+`./scripts/bash/create_sql_dump.sh` To create a new dump file for the current database state
+
+`./scripts/bash/load_sql_dump.sh` To overwrite your current db with the most recent dump files contents
 
