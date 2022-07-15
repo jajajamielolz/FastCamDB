@@ -41,7 +41,8 @@ def test_post_complex_camera_ok(client: TestClient):
         json=COMPLEX_CAMERA_JSON,
     )
     assert response.status_code == 200
-    response = client.get("/cameras", params={"name": COMPLEX_CAMERA_JSON.get("name"), "min_shutter_speed": COMPLEX_CAMERA_JSON.get("min_shutter_speed")})
+    response = client.get("/cameras", params={"name": COMPLEX_CAMERA_JSON.get("name"),
+                                              "min_shutter_speed": COMPLEX_CAMERA_JSON.get("min_shutter_speed")})
     assert response.json()[0].get('lens_mount').get('name') == COMPLEX_CAMERA_JSON.get('lens_mount').get('name')
 
 
@@ -68,30 +69,51 @@ def test_patch_cameras_ok(client: TestClient):
     assert len(response.json()) == 1
 
 
+def test_partial_name_search(client: TestClient):
+    """Test getting camera by partial name."""
+
+    # confirm that partial search still returns camera
+    response = client.get("/cameras", params={"name": "pen p"})
+    assert response.status_code == 200
+    assert len(response.json()) == 1
+
+    # confirm that partial search doesn't include objects that shouldn't be returned
+    response = client.get("/cameras", params={"name": "p4"})
+    assert response.status_code == 200
+    assert len(response.json()) == 0
+
+
+# def test_min_max_shutter(client: TestClient):
+#     """Test filtering on in max shutter speeds."""
+#
+#     # confirm that partial search still returns camera
+#     response = client.get("/cameras", params={"min_shutter_speed": "0.125"})
+#     assert response.status_code == 200
+#     assert len(response.json()) == 1
+
 # TODO: make compatible lens test
 
 
 COMPLEX_CAMERA_JSON = {
-  "name": "Contax 159 Quartz",
-  "description": "Geat, simple camera.",
-  "alternate_name": "Contax 159",
-  "min_shutter_speed": 1/1000,
-  "max_shutter_speed": 1,
-  "auto_focus": False,
-  "shutter_priority": False,
-  "aperture_priority": True,
-  "bulb_mode": True,
-  "self_timer": True,
-  "manual": True,
-  "battery_required": True,
-  "manufacturer": {
-    "name": "Contax",
-    "country": "Germany"
-  },
-  "lens_mount": {
-    "name": "C/Y"
-  },
-  "metering": {
-    "name": "TTL center-weighted",
-  }
+    "name": "Contax 159 Quartz",
+    "alternate_name": "Contax 159",
+    "min_shutter_speed": 1,
+    "max_shutter_speed": 1 / 1000,
+    "auto_focus": False,
+    "shutter_priority": False,
+    "aperture_priority": True,
+    "bulb_mode": True,
+    "self_timer": True,
+    "manual": True,
+    "battery_required": True,
+    "manufacturer": {
+        "name": "Contax",
+        "country": "Germany"
+    },
+    "lens_mount": {
+        "name": "C/Y"
+    },
+    "metering": {
+        "name": "TTL center-weighted",
+    }
 }

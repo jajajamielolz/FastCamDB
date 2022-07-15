@@ -36,3 +36,9 @@ def read_lenses(
 def patch_lens(request: Request, uuid: str, body: schemas.LensUpdate) -> Any:
     """Update an lens."""
     return crud.lens.update(db=request.state.db, uuid=uuid, obj_in=body)
+
+
+@router.delete("/{uuid}")
+def remove_lens(request: Request, uuid: str) -> Any:
+    """Remove a lens."""
+    return crud.lens.remove(db=request.state.db, uuid=uuid)

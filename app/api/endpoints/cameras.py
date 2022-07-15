@@ -36,3 +36,9 @@ def read_cameras(
 def patch_camera(request: Request, uuid: str, body: schemas.CameraUpdate) -> Any:
     """Update an camera."""
     return crud.camera.update(db=request.state.db, uuid=uuid, obj_in=body)
+
+
+@router.delete("/{uuid}")
+def remove_camera(request: Request, uuid: str) -> Any:
+    """Remove a lens."""
+    return crud.camera.remove(db=request.state.db, uuid=uuid)

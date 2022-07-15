@@ -11,6 +11,7 @@ from app.core import errors
 from app.services import crud
 from app import schemas
 from sqlalchemy import desc
+from sqlalchemy import or_
 
 
 class CRUDLens(CRUDBase[Lens, LensCreate, LensUpdate]):
@@ -60,7 +61,12 @@ class CRUDLens(CRUDBase[Lens, LensCreate, LensUpdate]):
             if custom_filter.uuid:
                 query = query.filter(self.model.uuid == custom_filter.uuid)
             if custom_filter.name:
-                query = query.filter(self.model.name == custom_filter.name)
+                words = custom_filter.name.split()
+                for w in words:
+                    conds = [
+                        self.model.name.ilike(f"%{w}%"),
+                    ]
+                    query = query.filter(or_(*conds))
             if custom_filter.manufacturer_name:
                 manufacturer = crud.manufacturer.get(db=db, get_value=custom_filter.manufacturer_name, get_property="name")
                 query = query.filter(self.model.manufacturer_uuid == manufacturer.uuid)
