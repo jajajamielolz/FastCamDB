@@ -16,7 +16,7 @@ _super_sessionmaker: Optional[sessionmaker]
 
 
 _user_conn_str = (
-    f"{config.DB_CONN_METHOD}://{config.DB_USERUSER}:{config.DB_USERPASSWORD}@"
+    f"{config.DB_CONN_METHOD}://{config.DB_USER}:{config.DB_USERPASSWORD}@"
     f"{config.DB_HOSTNAME}/{config.DB_DATABASE}"
 )
 _super_conn_str = (

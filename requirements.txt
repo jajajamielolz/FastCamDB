@@ -18,8 +18,7 @@ pytest-cov==3.0.0
 
 # DB
 alembic==1.4.3
-psycopg2-binary==2.8.6
-psycopg2==2.9.1
+psycopg2-binary==2.9.6
 sqlalchemy-utils==0.37.8
 
 # Formatting & linting

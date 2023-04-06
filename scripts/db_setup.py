@@ -22,20 +22,20 @@ def main():
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cursor = conn.cursor()
 
-    print("Creating User {} ...".format(config.DB_USERUSER))
+    print("Creating User {} ...".format(config.DB_USER))
     try:
         cursor.execute(
-            "CREATE USER {} WITH PASSWORD %s".format(config.DB_USERUSER),
+            "CREATE USER {} WITH PASSWORD %s".format(config.DB_USER),
             (config.DB_USERPASSWORD,),
         )
     except Exception as e:
         print(e)
 
-    print("Giving {} Permissions to public...".format(config.DB_USERUSER))
+    print("Giving {} Permissions to public...".format(config.DB_USER))
     try:
         cursor.execute(
             "GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO {}".format(
-                config.DB_USERUSER
+                config.DB_USER
             )
         )
     except Exception as e:

@@ -37,7 +37,7 @@ if ENVIRONMENT not in TESTING_ENVIRONMENTS:
 # ==== Database ====
 
 user_test_conn = (
-    f"{config.DB_CONN_METHOD}://{config.DB_USERUSER}:{config.DB_USERPASSWORD}@"
+    f"{config.DB_CONN_METHOD}://{config.DB_USER}:{config.DB_USERPASSWORD}@"
     f"{config.DB_HOSTNAME}/{config.DB_DATABASE}"
 )
 super_test_conn = (

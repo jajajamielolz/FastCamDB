@@ -30,7 +30,7 @@ class GlobalConfig(BaseSettings):
     # DB Users
     DB_SUPERUSER: str
     DB_SUPERPASSWORD: str
-    DB_USERUSER: str
+    DB_USER: str
     DB_USERPASSWORD: str
 
     # Echo sql

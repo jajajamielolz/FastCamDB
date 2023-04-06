@@ -25,7 +25,7 @@ pip install -r requirements.txt
    
 Note: this script can be ran at any point to start with a fresh database
 
-4. Confirm setup by running pytest `docker-compose -f fastcam-docker-compose.yml exec fastcamdb python -m pytest -k setup`. You should see `1 passed, 4 deselected`
+4. Confirm setup by running pytest `docker-compose -f fastcam-docker-compose.yml exec fastcamdb python -m pytest`. You should see ` 11 passed,`
 
 Note, you can set up the following alias `alias local_test='docker-compose -f fastcam-docker-compose.yml exec fastcamdb python -m pytest'` for easier testing `local_test -k setup`. When testing for all pytests you should see `5 passed in _.__s`
 
@@ -34,7 +34,7 @@ Note, you can set up the following alias `alias local_test='docker-compose -f fa
 ### Optional Steps
 For running the app in a local environment outside a container (While still using the postgres and redis container.)
 
-2. Confirm local environment with pytests `ENVIRONMENT=testing pytest app .` You should see ` 5 passed in _.__s`
+2. Confirm local environment with pytests `ENVIRONMENT=testing pytest app .` You should see ` 11 passed in _.__s`
 
 3. To run the server manually: `ENVIRONMENT=development uvicorn app.main:app --reload --workers 4 --host 0.0.0.0 --port 8000`
 
